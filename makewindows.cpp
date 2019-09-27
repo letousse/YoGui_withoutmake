@@ -32,7 +32,7 @@ void makewindows::on_pushButton_clicked(){
     proc_ovpn->setWorkingDirectory(QDir::currentPath() + "/scripts");
     proc_ovpn->start(QCoreApplication::applicationDirPath() + "/scripts/poky_script.sh", arg);
     if(!proc_ovpn->waitForStarted()){
-         QMessageBox::information(this,"Information about make","erro");
+         QMessageBox::information(this,"Information about make",QDir::currentPath() + "erro");
     }
     proc_ovpn->waitForFinished(-1);
      //QMessageBox::information(this,"Information about make",proc_ovpn->readAllStandardOutput());
