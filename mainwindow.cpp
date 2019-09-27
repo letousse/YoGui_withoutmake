@@ -158,7 +158,7 @@ int MainWindow::password_request(){
         pass_process->start(QCoreApplication::applicationDirPath() + "/scripts/poky_script.sh", args_test);
 
         if(!pass_process->waitForStarted()){
-           QMessageBox::information(this,"Information about make",QDir::currentPath() + "erro");
+           QMessageBox::information(this,"Information about make",QDir::currentPath() + " erro: \n Help");
         }
         pass_process->waitForFinished(-1);
 
