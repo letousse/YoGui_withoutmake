@@ -216,7 +216,7 @@ void MainWindow::on_pushButton_3_clicked()
                     this,
                     tr("Choose path"),
                     //QDir::homePath()
-                    /new
+                    "/new"
                     );
         ui->pushButton_2->setEnabled(1);
 }
