@@ -215,7 +215,8 @@ void MainWindow::on_pushButton_3_clicked()
         pathdest=QFileDialog::getExistingDirectory(
                     this,
                     tr("Choose path"),
-                    QDir::homePath()
+                    //QDir::homePath()
+                    /new
                     );
         ui->pushButton_2->setEnabled(1);
 }
