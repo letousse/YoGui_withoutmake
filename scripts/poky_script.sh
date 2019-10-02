@@ -89,7 +89,10 @@ then
 fi
 
 if [ $1 = "bitbake" ]
-then 	
+then 		
+	RUN locale-gen en_US.UTF-8
+	RUN export LC_ALL=en_US.UTF-8
+	RUN export LANG=en_US.UTF-8
 	cd poky
 	echo "BB_MIN_VERSION = "1.39.1"" > meta/conf/sanity.conf
 	echo "SANITY_ABIFILE = "${TMPDIR}/abi_version"" >> meta/conf/sanity.conf
