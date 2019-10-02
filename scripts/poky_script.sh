@@ -94,12 +94,12 @@ then
 	RUN export LC_ALL=en_US.UTF-8
 	RUN export LANG=en_US.UTF-8
 	cd poky
-	echo "BB_MIN_VERSION = "1.39.1"" > meta/conf/sanity.conf
-	echo "SANITY_ABIFILE = "${TMPDIR}/abi_version"" >> meta/conf/sanity.conf
-	echo "SANITY_VERSION ?= "1"" >> meta/conf/sanity.conf
-	echo "LOCALCONF_VERSION  ?= "1"" >> meta/conf/sanity.conf
-	echo "LAYER_CONF_VERSION ?= "7"" >> meta/conf/sanity.conf
-	echo "SITE_CONF_VERSION  ?= "1"" >> meta/conf/sanity.conf
+	echo "BB_MIN_VERSION = \"1.39.1\"" > meta/conf/sanity.conf
+	echo "SANITY_ABIFILE = \"\${TMPDIR}/abi_version\"" >> meta/conf/sanity.conf
+	echo "SANITY_VERSION ?= \"1\"" >> meta/conf/sanity.conf
+	echo "LOCALCONF_VERSION  ?= \"1\"" >> meta/conf/sanity.conf
+	echo "LAYER_CONF_VERSION ?= \"7\"" >> meta/conf/sanity.conf
+	echo "SITE_CONF_VERSION  ?= \"1\"" >> meta/conf/sanity.conf
 	source oe-init-build-env $2
 	cd $2
 	bitbake core-image-base
