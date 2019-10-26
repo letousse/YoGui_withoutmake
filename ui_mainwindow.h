@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.4
+** Created by: Qt User Interface Compiler version 5.12.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -381,16 +381,16 @@ public:
         pushButton->setText(QApplication::translate("MainWindow", "Exit", nullptr));
         label_4->setText(QApplication::translate("MainWindow", "Make your own OS", nullptr));
         label_6->setText(QApplication::translate("MainWindow", "Username:", nullptr));
-        Wifi_checkbox->setText(QApplication::translate("MainWindow", "Black border", nullptr));
+        Wifi_checkbox->setText(QApplication::translate("MainWindow", "Wireless", nullptr));
         i2c_checkbox->setText(QApplication::translate("MainWindow", "I2C", nullptr));
         ChangePass_checkbox->setText(QApplication::translate("MainWindow", "Change the pass in first login", nullptr));
-        USB_CheckBox->setText(QApplication::translate("MainWindow", "USB Peripheral", nullptr));
+        USB_CheckBox->setText(QApplication::translate("MainWindow", "Bluetooth", nullptr));
         SSH_CheckBox->setText(QApplication::translate("MainWindow", "SSH", nullptr));
         UART_CheckBox->setText(QApplication::translate("MainWindow", "UART", nullptr));
-        u_boot_checkbox->setText(QApplication::translate("MainWindow", "U_boot", nullptr));
+        u_boot_checkbox->setText(QApplication::translate("MainWindow", "Python package", nullptr));
         label_3->setText(QApplication::translate("MainWindow", "Features:", nullptr));
         No_password_checkbox->setText(QApplication::translate("MainWindow", "No Password/user", nullptr));
-        RPI_Logo_CheckBox->setText(QApplication::translate("MainWindow", "RPI_logo", nullptr));
+        RPI_Logo_CheckBox->setText(QApplication::translate("MainWindow", "Ethernet", nullptr));
         SPI_Checkbox->setText(QApplication::translate("MainWindow", "SPI", nullptr));
         label_7->setText(QApplication::translate("MainWindow", "Memory for GPU:", nullptr));
         label_2->setText(QApplication::translate("MainWindow", "Choose your machine:", nullptr));

@@ -28,7 +28,7 @@ void Dialog::loading_Layers(QString params){
         down->start(QCoreApplication::applicationDirPath() + "/scripts/poky_script.sh", args_test);
 
         if(!down->waitForStarted()){
-           QMessageBox::information(this,"Information about make", QDir::currentPath()+ "loading Layers erro");
+           QMessageBox::information(this,"Information about make", QDir::currentPath()+"erro");
         }
         connect(down,
             SIGNAL(readyReadStandardOutput()),

@@ -35,6 +35,8 @@ private slots:
 
     void update_IP_interface();
 
+    void update_IP_interface_ethernet();
+
     void update_Password(QString *);
 
     void on_pushButton_3_clicked();
@@ -66,6 +68,8 @@ private slots:
     void on_No_password_checkbox_clicked(bool checked);
 
     void on_SSH_CheckBox_clicked(bool checked);
+
+    void on_u_boot_checkbox_stateChanged(int arg1);
 
 private:
     bool sec_pass=true;

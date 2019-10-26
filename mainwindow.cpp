@@ -158,7 +158,7 @@ int MainWindow::password_request(){
         pass_process->start(QCoreApplication::applicationDirPath() + "/scripts/poky_script.sh", args_test);
 
         if(!pass_process->waitForStarted()){
-           QMessageBox::information(this,"Information about make",QDir::currentPath() + " erro: \n Help");
+           QMessageBox::information(this,"Information about make","erro");
         }
         pass_process->waitForFinished(-1);
 
@@ -215,8 +215,7 @@ void MainWindow::on_pushButton_3_clicked()
         pathdest=QFileDialog::getExistingDirectory(
                     this,
                     tr("Choose path"),
-                    //QDir::homePath()
-                    "/new"
+                    QDir::homePath()+"/Music"
                     );
         ui->pushButton_2->setEnabled(1);
 }
@@ -265,7 +264,7 @@ int MainWindow::int_size_string(QString str, QString beginning, QString End){
 void MainWindow::refresh_param(){
     QThread thread;
     QString features = "";
-    QString std="DISTRO = \"poky\"\nDISTRO_FEATURES_remove = \" x11 \"\nIMAGE_INSTALL_append = \" ${CORE_IMAGE_BASE_INSTALL}\"\nUSER_CLASSES ?= \"image-mklibs image-prelink\"\nSDKMACHINE = \"x86_64\"\nPACKAGECONFIG_append_pn-qemu-native = \" sdl\"\nPACKAGECONFIG_append_pn-nativesdk-qemu = \" sdl\"\nPATCHRESOLVE = \"noop\"\nCONF_VERSION = \"1\"\nCORE_IMAGE_EXTRA_INSTALL+=\"python3 python3-pip python-pyserial\"\n";
+    QString std="DISTRO = \"poky\"\nDISTRO_FEATURES_remove = \" pulseaudio wifi ALSA 3g bluetooth irda nfc zeroconf x11 wayland \"\nIMAGE_INSTALL_append = \"${CORE_IMAGE_BASE_INSTALL} \"\nUSER_CLASSES ?= \"image-mklibs image-prelink\"\nSDKMACHINE = \"x86_64\"\nPACKAGECONFIG_append_pn-qemu-native = \" sdl\"\nPACKAGECONFIG_append_pn-nativesdk-qemu = \" sdl\"\nPATCHRESOLVE = \"\"\nCONF_VERSION = \"1\"\n";
 
     //Atualiza Change password
     if(ui->ChangePass_checkbox->checkState()){
@@ -296,8 +295,8 @@ void MainWindow::refresh_param(){
     update_geral_conf("PARALLEL_MAKE = \"", &std, "-j "+QString::number(N_Core));
     update_geral_conf("GPU_MEM = \"", &std, QString::number(ui->GPU_Spinbox->value()));
     //Atualiza U_boot
-    if(ui->u_boot_checkbox->checkState())
-        update_geral_conf("RPI_USE_U_BOOT = \"", &std,"1");
+    if(ui->u_boot_checkbox->checkState())       
+        update_geral_conf("CORE_IMAGE_EXTRA_INSTALL+=\"",  &std, "python3 python3-pip python-pyserial python-setuptools python3-pip zip python-pyyaml python-pycrypto python-msgpack python-json python-pymongo");
     //SPI
     if(ui->SPI_Checkbox->checkState())
         update_geral_conf("ENABLE_SPI_BUS = \"", &std,"1");
@@ -308,14 +307,19 @@ void MainWindow::refresh_param(){
     if(ui->UART_CheckBox->checkState())
         update_geral_conf("ENABLE_UART = \"", &std,"1");
     //WIFI
-    if(!ui->Wifi_checkbox->checkState())
-        update_geral_conf("DISABLE_OVERSCAN = \"", &std,"1");
+    if(ui->Wifi_checkbox->checkState())
+        std.replace("wifi","");
+        //update_geral_conf("IMAGE_INSTALL =+ \"", &std,"wpa-supplicant dhcp-client linux-firmware");
+        //update_geral_conf("IMAGE_INSTALL =+ \"", &std,"wpa-supplicant wireless-tools dhcp-client linux-firmware");
     //USB
-    if(ui->UART_CheckBox->checkState())
-        update_geral_conf("ENABLE_DWC2_PERIPHERAL = \"", &std,"1");
+    if(ui->USB_CheckBox->checkState())
+         std.replace("bluetooth","");
     //RPI_Logo
-    if(!ui->RPI_Logo_CheckBox-CheckStatus())
-        update_geral_conf("DISABLE_RPI_BOOT_LOGO = \"", &std,"1");
+    if(ui->RPI_Logo_CheckBox-CheckStatus())
+        update_IP_interface_ethernet();
+        //update_geral_conf("IMAGE_FEATURE_remove = \"", &std,"psplash");
+        //update_geral_conf("DISABLE_RPI_BOOT_LOGO = \"", &std,"1");
+
     std.append("#By Rafael Araujo");
     QFile file("scripts/poky/build/conf/local.conf");
     QTextStream in(&file);
@@ -422,13 +426,14 @@ void MainWindow::update_Password(QString *temp_file){
 void MainWindow::update_IP_interface(){
     int LastIpSize;
     QFile file("scripts/poky/meta/recipes-core/init-ifupdown/init-ifupdown-1.0/interfaces");
-    QString Ip_static="", temp_file="";
+    QString Ip_static="auto lo\niface lo inet loopback\n\nauto wlan0\niface wlan0 inet dhcp\n          wpa-conf /etc/wpa_supplicant.conf\n\n", temp_file="";
     QTextStream in(&file);
     if (file.open(QIODevice::ReadWrite | QIODevice::Text)){
-        temp_file=file.readAll();
+        temp_file=Ip_static.append("auto eth0 \niface eth0 inet static\naddress "+ip_interface +"\nbroadcast 192.168.0.255\nnetmask 255.255.255.0\n");
+       /* temp_file=file.readAll();
         if(temp_file.contains("auto eth0"))
-                temp_file.replace("auto eth0\n","");
-        Ip_static.append("iface eth0 inet static\naddress "+ip_interface +"\nbroadcast 192.168.0.255\nnetmask 255.255.255.0\n");   
+                temp_file.replace("","");
+        Ip_static.append("auto eth0 \niface eth0 inet static\naddress "+ip_interface +"\nbroadcast 192.168.0.255\nnetmask 255.255.255.0\n");
         if(temp_file.contains("iface eth0 inet dhcp")){
             temp_file.replace(QString("iface eth0 inet dhcp"),Ip_static);
         }
@@ -442,8 +447,8 @@ void MainWindow::update_IP_interface(){
         }
         else {
             temp_file.append(Ip_static);
-        }
-        QMessageBox::information(this,"Information about make",temp_file);
+        }*/
+      //  QMessageBox::information(this,"Information about make",temp_file);
        // file.seek(0);
         file.resize(0);
         //file.write(temp_file.toUtf8());
@@ -481,3 +486,21 @@ void MainWindow::update_geral_conf(QString feature, QString* file, QString check
     if(index<=0){
         file->append(feature);}
 }
+
+void MainWindow::update_IP_interface_ethernet(){
+    QFile file("scripts/poky/meta/recipes-core/init-ifupdown/init-ifupdown-1.0/interfaces");
+    QString Ip_static="auto lo\niface lo inet loopback\n\nauto wlan0\niface wlan0 inet dhcp\n          wpa-conf /etc/wpa_supplicant.conf\n\n", temp_file="";
+    QTextStream in(&file);
+    if (file.open(QIODevice::ReadWrite | QIODevice::Text)){
+        temp_file=Ip_static.append("auto eth0 \niface eth0 inet dhcp\n");
+       // QMessageBox::information(this,"Information about make",temp_file);
+        file.resize(0);
+        in.flush();
+        in << temp_file;
+        file.flush();
+        file.close();
+
+
+    }
+}
+

@@ -286,7 +286,7 @@
        <item row="4" column="2">
         <widget class="QCheckBox" name="Wifi_checkbox">
          <property name="text">
-          <string>Black border</string>
+          <string>Wireless</string>
          </property>
         </widget>
        </item>
@@ -323,7 +323,7 @@
        <item row="5" column="2">
         <widget class="QCheckBox" name="USB_CheckBox">
          <property name="text">
-          <string>USB Peripheral</string>
+          <string>Bluetooth</string>
          </property>
         </widget>
        </item>
@@ -347,7 +347,7 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>U_boot</string>
+          <string>Python package</string>
          </property>
         </widget>
        </item>
@@ -371,7 +371,7 @@
        <item row="6" column="2">
         <widget class="QCheckBox" name="RPI_Logo_CheckBox">
          <property name="text">
-          <string>RPI_logo</string>
+          <string>Ethernet</string>
          </property>
         </widget>
        </item>
